@@ -1,0 +1,333 @@
+<input type="hidden" value="{{out.prefijo}}" id="prefijo">
+<input type="hidden" value="{{head.url_base}}" id="url_base">
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="card card-wizard" id="wizardCard">
+                    <form id="wizardForm" method="" action="">
+                        <div class="card-header text-center">
+                            <h4 class="card-title jmy_web" 
+                                data-t="plantillas_web" 
+                                data-a="vistaweb" 
+                                data-id="{{out.prefijo}}_titulo"  
+                                data-idf="ypk_nuevo_brief" data-ver="on" >...</h4>
+                            <p class="category jmy_web" 
+                                data-t="plantillas_web" 
+                                data-a="vistaweb" 
+                                data-id="{{out.prefijo}}_descripcion"  
+                                data-idf="ypk_nuevo_brief" data-ver="on" >...</p>
+                        </div>
+                        <div class="card-content">
+                            <ul class="nav">
+                                <li><a href="#tab1" data-toggle="tab">Solicitud</a></li>
+                                <li><a href="#tab2" data-toggle="tab">Proyecto a desarrollar</a></li>
+                                <li><a href="#tab3" data-toggle="tab">Acabados especiales</a></li>
+                                <li><a href="#tab4" data-toggle="tab">Confirmación</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane" id="tab1">
+                                    
+                                    <h5 class="text-center">Proceso de nuevo brief.</h5>
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Descripción</label>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" placeholder="Escriba aquí los objetivos" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 col-md-offset-1">
+                                            <div class="form-group">
+                                                <label class="control-label">
+                                                    First Name
+                                                </label>
+                                                <input class="form-control" type="text" name="first_name" placeholder="ex: Mike">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-5 col-md-offset-1">
+                                            <div class="form-group">
+                                                <label class="jmy_web" 
+                                            data-t="plantillas_web" 
+                                            data-a="vistaweb" 
+                                            data-id="{{out.prefijo}}_cliente"  
+                                            data-idf="tpk_nuevo_brief" data-ver="on" >Cliente</label>
+                                                
+                                                <select type="select" class="form-control input-sm btn-mini  jmy_web" 
+                                                placeholder="Seleccione un cargo o servicio" 
+                                                data-lista-id="clientes" 
+                                                data-lista-t="clientes" 
+                                                data-auto-guardar="no"
+                                                data-fn="buscarMarca" 
+                                                data-value="" 
+                                                data-t="clientes" 
+                                                data-a="tpk_ventas" 
+                                                data-id="{{out.prefijo}}_cliente"  
+                                                data-idf=""
+                                                id="cliente" 
+                                                tabindex="60" contenteditable="true" 
+                                                ></select>                                                    
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label class="jmy_web" 
+                                            data-t="plantillas_web" 
+                                            data-a="vistaweb" 
+                                            data-id="{{out.prefijo}}_marca"  
+                                            data-idf="tpk_nuevo_brief" data-ver="on" >Marca</label>
+
+                                                <select type="select" class="form-control input-sm btn-mini  jmy_web" 
+                                                placeholder="Seleccione un cargo o servicio" 
+                                                data-lista-id="marcas" 
+                                                data-lista-t="clientes" 
+                                                data-idf=""
+                                                data-auto-guardar="no"
+                                                <!-- data-fn="buscarMarca"  -->
+                                                data-value="" 
+                                                data-t="clientes" 
+                                                data-a="tpk_ventas" 
+                                                data-id="{{out.prefijo}}_marca"  
+                                                
+                                                id="marca" 
+                                                tabindex="60" contenteditable="true" 
+                                                ></select>                                                    
+                                            </div>
+                                        </div>
+
+                                       
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Objetivos</label>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" placeholder="Escriba aquí los objetivos" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h5 class="text-center">Indicadores</h5>     
+                                        <div class="col-md-6 col-md-offset-1">
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Objetivo</label>
+                                                    <div class="col-sm-4">
+                                                        <div class="radio">
+                                                            <input type="radio" name="radio1" id="radio1" value="option1" checked="">
+                                                            <label for="radio1">
+                                                                    Habitantes 
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+
+                                                        <div class="radio">
+                                                            <input type="radio" name="radio1" id="radio2" value="option2">
+                                                            <label for="radio2">
+                                                                Localidades
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <div class="form-group">
+                                                <label class="control-label">
+                                                    Unidad de medida
+                                                </label>
+                                                <!--     IMPORTANT! - the "bootstrap select picker" is not compatible with jquery.validation.js, that's why we use the "default select" inside this wizard. We will try to contact the guys who are responsibble for the "bootstrap select picker" to find a solution. Thank you for your patience.
+                                                    -->
+                                                <select name="cities" class="form-control">
+                                                    <option selected="" disabled="">Seleccione una opción</option>
+                                                    <option value="Kg">Kilos</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Meta propuesta</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control">
+                                                        <span class="help-block"></span>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+
+
+                                    
+
+
+                                </div>
+                              
+                        <div class="tab-pane" id="tab2">
+                            <div class="row">
+                                        <h5 class="text-center">Orden de gobierno</h5>                            
+                                        
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label">Orden de gobierno</label>
+                                                    <div class="col-sm-4">
+                                                        <div class="radio">
+                                                            <input type="radio" name="radio1" id="radio1" value="option1" checked="">
+                                                            <label for="radio1">
+                                                                    Estatal
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+
+                                                        <div class="radio">
+                                                            <input type="radio" name="radio1" id="radio2" value="option2">
+                                                            <label for="radio2">
+                                                                Mixta
+                                                            </label>
+                                                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <div class="form-group">
+                                                <label class="control-label">
+                                                Periocidad de reporte
+                                                </label>
+                                                <!--     IMPORTANT! - the "bootstrap select picker" is not compatible with jquery.validation.js, that's why we use the "default select" inside this wizard. We will try to contact the guys who are responsibble for the "bootstrap select picker" to find a solution. Thank you for your patience.
+                                                    -->
+                                                <select name="cities" class="form-control">
+                                                    <option selected="" disabled="">Seleccione una opción</option>
+                                                    <option value="semanal">Semanal</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            <div class="row">                                
+                                 <h5 class="text-center">Alcance del proyecto.</h5>
+                                <div class="col-md-10 col-md-offset-1">
+                                     <div class="form-group">
+                                        <label class="control-label">
+                                           Municipios
+                                        </label>
+                                        <select name="cities" class="form-control">
+                                            <option selected="" disabled="">Seleccione una opción</option>
+                                            <option value="municipio">Municipio 1</option>
+                                            <option value="municipio">Municipio 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 col-md-offset-1">
+                                     <div class="form-group">
+                                        <label class="control-label">
+                                           Localidades
+                                        </label>
+                                        <select name="cities" class="form-control">
+                                            <option selected="" disabled="">Seleccione una opción</option>
+                                            <option value="Localidade">Localidade 1</option>
+                                            <option value="Localidade">Localidade 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 col-md-offset-1">
+                                     <div class="form-group">
+                                        <label class="control-label">
+                                           Colonias
+                                        </label>
+                                        <select name="cities" class="form-control">
+                                            <option selected="" disabled="">Seleccione una opción</option>
+                                            <option value="Colonia">Colonia 1</option>
+                                            <option value="Colonia">Colonia 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 col-md-offset-1">
+                                     <div class="form-group">
+                                        <label class="control-label">
+                                           Colonias
+                                        </label>
+                                        <select name="cities" class="form-control">
+                                            <option selected="" disabled="">Seleccione una opción</option>
+                                            <option value="Colonia">Colonia 1</option>
+                                            <option value="Colonia">Colonia 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 col-md-offset-1">
+                                     <fieldset>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Población beneficiada</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control">
+                                                <span class="help-block">Breve descripción de la población a quien se beneficiara .</span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="row">
+                               
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab3">
+                            <h2 class="text-center text-space">!Solo un paso más! <br><small>Por favor revisa que los datos sean correctos, si lo es da click en "<b>Guardar</b>" para finalizar</small></h2>
+                              <table class="table table-striped">	                                   
+                                <tbody>
+                                    <tr>
+                                        <td>Nombre del programa</td>
+                                        <td>ZZZZZ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nombre de la acción</td>
+                                        <td>ZZZZZ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Objetivos</td>
+                                        <td>ZZZZZ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dependencias responsables</td>
+                                        <td>ZZZZZ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Indicador</td>
+                                        <td>ZZZZZ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Meta propuesta</td>
+                                        <td>ZZZZZ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Unidad de medida</td>
+                                        <td>ZZZZZ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>YYYYY</td>
+                                        <td>ZZZZZ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-default btn-fill btn-wd btn-back pull-left"><i class="fas fa-angle-left"></i> Regresar</button>
+                    <button type="button" class="btn btn-info btn-fill btn-wd btn-next pull-right">Siguiente <i class="fas fa-angle-right"></i></button>
+                    <button type="button" class="btn btn-info btn-fill btn-wd btn-finish pull-right" onclick="onFinishWizard()"> <i class="far fa-check-circle"></i> Finalizar</button>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,16 +1,31 @@
-$(document).ready( function () {
-   /* $.notify({
-        icon: "ti-gift",
-        message: "Welcome to <b>Paper Dashboard</b> - a beautiful dashboard for every web developer."
 
-    },{
-        type: 'info',
-        timer: 4000,
-        placement: {
-            from: 'top',
-            align: 'center'
-        }
-    });*/
+$('#card_ver_perfil').hide();
+$('#card_editar_perfil').hide();
+$('#equipo_de_trabajo').hide();
+$('.loading_editor').hide();
+$('.loading_lista').hide();
+$(document).ready( function () {
+    $('[rel="tooltip"]').tooltip();
+    console.log('jmy_admin user init');
+
+    modulos_def();       
+    actualizar_usuarios();
+    $(window).resize(function () {
+    $table.bootstrapTable('resetView');
+    });
+} );
+/* $.notify({
+    icon: "ti-gift",
+    message: "Welcome to <b>Paper Dashboard</b> - a beautiful dashboard for every web developer."
+
+},{
+    type: 'info',
+    timer: 4000,
+    placement: {
+        from: 'top',
+        align: 'center'
+    }
+});*/
     const url_base=$('#url_base').val();
     function modulos_sav() {
         let g ={};
@@ -33,7 +48,7 @@ $(document).ready( function () {
                 swal(r.mensaje,'',((r.error)?"error":"success"), {
                     buttons: false,
                     timer: 3000,
-                  });
+                });
         },error: function(result) {console.log(result);}
         });
     }
@@ -48,11 +63,6 @@ $(document).ready( function () {
             });
         });
     });
-    $('#card_ver_perfil').hide();
-    $('#card_editar_perfil').hide();
-    $('#equipo_de_trabajo').hide();
-    $('.loading_editor').hide();
-    $('.loading_lista').hide();
     $('#ver_mi_perfil').on('click',function(){
         $('#card_nuevo_perfil').hide(20);
         $('#card_ver_perfil').show(30);
@@ -82,7 +92,7 @@ $(document).ready( function () {
             $('#tabla-usuarios').find('tbody').html();
             $('#tabla-usuarios').find('tbody').html(h);
             var $t_usuarios = $('#tabla-usuarios');
-             
+            
             window.operateEvents = {
                 'click .ver_usuario': function (e, value, row, index) {
                     info = JSON.stringify(row);
@@ -199,8 +209,8 @@ $(document).ready( function () {
             swal("UPS!","Ocurrió algo, al parecer esta listo. Intenta de nuevo.","warning", {
                 buttons: false,
                 timer: 3000,
-              });
-              $('.loading_editor').hide(30);
+            });
+            $('.loading_editor').hide(30);
             console.log(result);}
         });
     }
@@ -237,18 +247,18 @@ $(document).ready( function () {
                 swal(((r.mensaje!=undefined)?r.mensaje:'Guardado correctamente'),'',((r.error)?"error":"success"), {
                     buttons: false,
                     timer: 3000,
-                  });
+                });
         },error: function(result) {
             swal("UPS!","Ocurrió algo, al parecer esta listo. Intenta de nuevo.","warning", {
                 buttons: false,
                 timer: 3000,
-              });
-              $('.loading_editor').hide(30);
+            });
+            $('.loading_editor').hide(30);
             console.log(result);}
         });
     }
     var $table = $('#bootstrap-table');
-  
+
 
     window.operateEvents = {
         'click .view': function (e, value, row, index) {
@@ -281,9 +291,9 @@ $(document).ready( function () {
         showColumns: true,
         pagination: true,
         searchAlign: 'left',
-        pageSize: 8,
+        pageSize: 100,
         clickToSelect: false,
-        pageList: [8,10,25,50,100],
+        pageList: [100,200,300],
 
         formatShowingRows: function(pageFrom, pageTo, totalRows){
             //do nothing here, we don't want to show the text "showing x of y from..."
@@ -299,16 +309,10 @@ $(document).ready( function () {
             detailClose: 'ti-close'
         }
     });
-  
+
 
     //activate the tooltips after the data table is initialized
-    $('[rel="tooltip"]').tooltip();
-    modulos_def();       
-    actualizar_usuarios();
-    $(window).resize(function () {
-        $table.bootstrapTable('resetView');
-    });
-} );
+
 function operateFormatterUsuarios(value, row, index) {    
     return [
         '<div class="table-icons">',

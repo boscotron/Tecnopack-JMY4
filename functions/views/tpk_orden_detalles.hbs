@@ -1,0 +1,181 @@
+<div class="row"> 
+    <div class="col-sm-12 col-md-4 col-lg-2">
+            <div class="card card-plain">
+                <div class="card-header">
+                    <h2 class="card-title">REFERENCIA</h2>
+                    <p class="category pull-right">estado</p>
+                </div>
+                <div class="card-content">
+
+                    <div class="panel-group" id="aaa">
+                        <div class="panel panel-border panel-default">
+                            <a href="#collapseOnePlain">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">
+                                        Equipo de trabajo
+                                        <i class="ti-angle-down"></i>
+                                    </h6>
+                                </div>
+                            </a>
+                            <div id="collapseOnePlain" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                     <ul class="list-unstyled team-members">
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-lg-4 no-gutters ">
+                                                    <div class="avatar">
+                                                        <img src="{{head.cdn}}assets/img/faces/face-0.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 no-gutters ">
+                                                    <div class="avatar">
+                                                        <img src="{{head.cdn}}assets/img/faces/face-1.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 no-gutters ">
+                                                    <div class="avatar">
+                                                        <img src="{{head.cdn}}assets/img/faces/face-3.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+	                                </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-border panel-default">
+                            <a  href="#collapseTwoPlain">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">
+                                       Detalles
+                                        <i class="ti-angle-down"></i>
+                                    </h6>
+                                </div>
+                            </a>
+                            <div id="collapseTwoPlain" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <table class="table table-striped">	                                 
+	                                    <tbody>
+                                            {{#carga out.detalles_brief}} {{#if var}}
+	                                        <tr>
+	                                        	<td>{{nom}}</td>
+	                                        	<td>{{var}}</td>
+	                                        </tr>
+                                            {{/if}}{{/carga}}
+	                                    </tbody>
+	                                </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-border panel-default">
+                            <a data-toggle="collapse" href="#collapseThreePlain">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"> 
+                                        Tareas
+                                        <i class="ti-angle-down"></i>
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseThreePlain" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default">Left</button>
+                                        <button type="button" class="btn btn-default">Middle</button>
+                                        <button type="button" class="btn btn-default">Right</button>
+                                    </div>
+                                            
+                                   <div class="table-full-width table-tasks">
+	                                    <table class="table">
+	                                        <tbody>
+	                                            <tr>
+	                                                <td>
+                                                    <div class="checkbox">
+                                                        <input id="checkbox1" type="checkbox">
+                                                        <label for="checkbox1">
+
+                                                      </label>
+                                                    </div>
+	                                                </td>
+	                                                <td>Sign contract for "What are conference organizers afraid of?"</td>
+	                                                <td class="td-actions text-right">
+														<div class="table-icons">
+															<button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+		                                                        <i class="ti-pencil-alt"></i>
+		                                                    </button>
+		                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+		                                                        <i class="ti-close"></i>
+		                                                    </button>
+														</div>
+	                                                </td>
+	                                            </tr>
+	                                            <tr>
+	                                                <td>
+                                                    <div class="checkbox">
+                                                        <input id="checkbox2" type="checkbox">
+                                                        <label for="checkbox2">
+
+                                                      </label>
+                                                    </div>
+	                                                </td>
+	                                                <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
+	                                                <td class="td-actions text-right">
+														<div class="table-icons">
+															<button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+		                                                        <i class="ti-pencil-alt"></i>
+		                                                    </button>
+		                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+		                                                        <i class="ti-close"></i>
+		                                                    </button>
+														</div>
+	                                                </td>
+	                                            </tr>
+	                                        </tbody>
+	                                    </table>
+	                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-8 col-lg-10">
+         <div class="card">
+            <div class="card-content">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                            <li class="active"><a href="#brief" data-toggle="tab">Brief</a></li>
+                            <li><a href="#profile" data-toggle="tab">Diseño</a></li>
+                            <li><a href="#messages" data-toggle="tab">Preprensa</a></li>
+                            <li><a href="#messages" data-toggle="tab">Cotizaciones</a></li>
+                            <li><a href="#messages" data-toggle="tab">Seguimiento</a></li>
+                            <li><a href="#compras" data-toggle="tab">Compras</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="my-tab-content" class="tab-content text-center">
+                    <div class="tab-pane active" id="brief">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="example3.1" style="height: 200px;"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div id="example3.1" style="height: 200px;"></div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="tab-pane" id="profile">
+                        <p>Here is your profile.</p>
+                    </div>
+                    <div class="tab-pane" id="messages">
+                        <p>Here are your messages.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
