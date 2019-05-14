@@ -10,7 +10,7 @@
 	<title>{{head.title}}</title>
 	<!-- Canonical SEO -->
     <link rel="canonical" href="https://www.comsis.mx/"/>
-
+    <base href="{{head.cdn}}" target="_blank">
 	{{#carga carga.meta}}
     <meta {{#if name}} name="{{name}}" {{/if}} {{#if content}} content="{{content}}" {{/if}} {{#if property}} property="{{property}}" {{/if}} >{{/carga}}
 	

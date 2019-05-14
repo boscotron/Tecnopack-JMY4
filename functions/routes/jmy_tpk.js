@@ -154,38 +154,54 @@ router.post('/ordenes/:c', jmy.sesion(jmy_connect.key),async (req, res) => {
 router.get('/orden/:i', jmy.sesion(jmy_connect.key),async (req, res) => {
     try {    
         let d=jmy.context(req);
-        const a = req.accesos; 
-        d.out['detalles_brief']=[
-            {
-                nom:"Fecha",
-                var:"2018-01-01",
-            },
-            {
-                nom:"Cliente",
-                var:"2018-01-01",
-            },
-            {
-                nom:"Marca",
-                var:"2018-01-01",
-            },
-            {
-                nom:"Cantidad a cotizar",
-                var:"2018-01-01",
-            },
-            {
-                nom:"Corrugado",
-                var:"2018-01-01",
-            },
-            {
-                nom:"Charola",
-                var:"2018-01-01",
-            }
-        ];
-        d.head.title="Detalles de orden";
-        d.carga.js.push({url:"https://www.gstatic.com/charts/loader.js"});
-        d.carga.js.push({url:d.head.cdn+"assets/js/tpk/orden.js"});
+        const a=req.accesos,id=req.params.i|| null; 
 
-        res.render('tpk_orden_detalles',d);
+
+        d.head.title="Sin referencia";
+        if(id==undefined){
+            res.render('tpk_orden_404',d);
+        }else{
+            jmy.ver([{
+                tabla:'ordenes',
+                api:'tpk_ventas',
+                id:id,
+            }],a).then(function (e){
+                d.out['e']=JSON.stringify(e);
+                d.out['detalles_brief']=[
+                    {
+                        nom:"Fecha",
+                        var:"2018-01-01",
+                    },
+                    {
+                        nom:"Cliente",
+                        var:"2018-01-01",
+                    },
+                    {
+                        nom:"Marca",
+                        var:"2018-01-01",
+                    },
+                    {
+                        nom:"Cantidad a cotizar",
+                        var:"2018-01-01",
+                    },
+                    {
+                        nom:"Corrugado",
+                        var:"2018-01-01",
+                    },
+                    {
+                        nom:"Charola",
+                        var:"2018-01-01",
+                    }
+                ];
+                d.head.title="Sin referencia";
+                d.carga.css.push({url:d.head.cdn+"assets/jsoneditor/dist/jsoneditor.min.css"});
+                d.carga.js.push({url:d.head.cdn+"assets/jsoneditor/dist/jsoneditor.min.js"})
+                d.carga.js.push({url:"https://www.gstatic.com/charts/loader.js"});
+                d.carga.js.push({url:d.head.cdn+"assets/js/tpk/orden.js?d="+Date.now() });;
+
+                res.render('tpk_orden_detalles',d);
+            });
+        }
 
     } catch(e) {
         console.log('administrador_g er:',e);                    

@@ -34,4 +34,10 @@ $(document).ready(function(){
       chart.draw(dataTable);
     }
 
+    let container = document.getElementById("jsoneditor"),
+        j = document.getElementById("jsoneditor").innerHTML;
+    if(j!=''&& typeof j =="string")
+      j=JSON.parse(j);
+    console.log(j);
+ 
 });

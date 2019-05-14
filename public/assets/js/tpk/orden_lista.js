@@ -96,7 +96,7 @@ $(document).ready(function name() {
                         closeOnCancel: false
                     }).then( function (r) {
                         if(typeof r.value !="undefined")
-                            window.location.href = url_base+'/tpk/orden/'+row.id;
+                            window.location.href = url_base+'tpk/orden/'+row.id;
                     });
                 },
                 'click .edit': function (e, value, row, index) {
