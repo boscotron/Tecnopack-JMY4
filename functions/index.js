@@ -20,7 +20,7 @@ LOS TITULARES DEL DERECHO DE AUTOR SERÁN RESPONSABLES POR CUALQUIER RECLAMACIÓ
 EN UNA ACCIÓN DE CONTRATO, CORTE O DE OTRA MANERA, DERIVADO DE, FUERA O EN
 CONEXIÓN CON EL SOFTWARE O EL USO U OTRAS REPARACIONES EN EL SOFTWARE.
 */ 
-'use strict'; 
+'use strict';    
 /////////////////////// CON FIREBASE         
          
 const functions = require('firebase-functions'); 
@@ -62,14 +62,14 @@ app.get('/', jmy.sesion(jmy_connect.key),async (req, res) => {
   try {      
     console.log('post',post);
     let data=context(req);
-    data.head.title="Coworking";
+    data.head.title="Panel TPK";
     res.render('social_dashboard',data);    
   } catch(error) {
-    console.log('Error detecting sentiment or saving message', error.message);
+    console.error('Error detecting sentiment or saving message', error);
     res.sendStatus(500);
   }
 });   
-  
+   
  
 app.get('/tkn', jmy.sesion(jmy_connect.key),async (req, res) => {
   let acceso = req.accesos

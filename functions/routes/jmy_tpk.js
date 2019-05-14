@@ -24,8 +24,7 @@ const express = require('express');
 const router = express.Router();
 const jmy = require('comsis_jmy');
 const jmy_connect= require('../config/key.js');
-router.use(jmy.co);
-
+router.use(jmy.co); 
 router.get('/ordenes', async (req, res) => {
 
     res.send(JSON.stringify([req.hostname]));    
@@ -41,29 +40,109 @@ router.get('/ordenes/:c', jmy.sesion(jmy_connect.key),async (req, res) => {
                 res.send('dashboard');
             break;    
             case 'nuevo':
-
-                d=jmy.context(req,{
+                d.carga={
                     css:[
-                    {url:"//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"},
-                    {url:"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css"},
+                        {url:"//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"},
+                        {url:"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css"},
                     ],
                     js:[
-                    {url:"//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"},
-                    {url:"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"},
-                    {url:"//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"},
-                    {url:d.head.cdn+"assets/js/tpk/orden_nuevo.js"}
+                        {url:"//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"},
+                        {url:"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"},
+                        {url:"https://unpkg.com/popper.js"},
+                        {url:d.head.cdn+"assets/js/jmy/jmy_web_node.js"},
+                        {url:d.head.cdn+"assets/js/tpk/utilidades.js?v="+Date.now()},
+                        {url:d.head.cdn+"assets/js/tpk/orden_nuevo.js"}
                     ]
-                });
+                };
                 d.head.title="Nuevo brief";
                 d.out['prefijo']="tpk_orden_nuevo"; 
                 res.render('tpk_orden_nuevo',d);
                     
             break;    
             case 'lista':
-                res.send('lista');
+                d.carga={
+                    css:[
+                        {url:"//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"},
+                        {url:"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css"},
+                    ],
+                    js:[
+                        {url:"//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"},
+                        {url:"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"},
+                        {url:"https://unpkg.com/popper.js"},
+                        {url:d.head.cdn+"assets/js/jmy/jmy_web_node.js"},
+                        {url:d.head.cdn+"assets/js/tpk/utilidades.js?v="+Date.now()},
+                        {url:d.head.cdn+"assets/js/tpk/orden_lista.js?v="+Date.now()}
+                    ]
+                };
+                d.head.title="Listado de ordenes";
+                d.out['prefijo']="tpk_ordenes_lista"; 
+                res.render('tpk_ordenes_lista',d);
             break;    
             default:
               res.render('404',d);
+            break;
+        }
+    } catch(e) {
+        console.log('administrador_g er:',e);                    
+        res.status(500).send('Ups! ocurrió un error en el servidor, esta siendo reportado, por favor intente más tarde.');
+        return;
+    }
+});
+router.post('/ordenes/:c', jmy.sesion(jmy_connect.key),async (req, res) => {
+     
+    try {    
+        let post = (typeof req.body == 'string')?JSON.parse(req.body):{},
+            d=jmy.context(req);
+        const a = req.accesos; 
+        
+        switch (req.params.c) {
+            case 'lista':
+                /// ver
+                jmy.ver([{
+                    tabla:'ordenes',
+                    api:'tpk_ventas',
+                }],a).then(function (e){
+                    let col=[];
+                    switch ('f') {
+                        case 'ventas':
+                        break;
+                        default:
+                            col=['referencia','fecha','marca','descripcion','estado'];
+                            break;
+                    }
+                    res.send(JSON.stringify({ 
+                        col:col,
+                        e:e,
+                    }));
+                });
+            break;
+            case 'guardar':  
+                console.log(post);
+                let g=post;
+                g['estado']='asignacion_de_diseno';
+                
+                let id=(typeof g['id']=="string")?d['id']:null;
+                jmy.guardar([{
+                    tabla:'ordenes',
+                    api:'tpk_ventas',
+                    id:id,
+                    guardar:{
+                        orden:g,
+                        estado:"asignacion_de_diseno",
+                        vendedor:{
+                            user_id:a.user_info.uid,
+                            name:a.user_info.nombre,
+                            foto:a.user_info.url_foto,
+                            estado:"nuevo"
+                        }
+                    }
+                }],a).then(function(e){
+                    res.send(JSON.stringify(e[0].jmy_guardar))
+                });
+            //res.send(JSON.stringify(post));
+            break;    
+            default:
+              res.send(JSON.stringify({error:'no fn'}));
             break;
         }
     } catch(e) {

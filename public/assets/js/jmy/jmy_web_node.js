@@ -283,16 +283,18 @@ function jmy_web_div_click(){
 										if(typeof s[dv.i] == "object")
 											s[dv.i].forEach(e =>{t.push({id: e.ot.value,text: e.ot.nombre})});
 										t.push({id:"JMYAGREGAR",text:'[+] Agregar '});
-										$("#"+dv.i).select2({data:t});											
+											$("#"+dv.i).removeClass('jmy_web');
+										if(typeof window['v'+dv.i]=="undefined"){
+											window['v'+dv.i]=$("#"+dv.i).select2({data:t});
 										$("#"+dv.i).change(function(){
 											let v=$("option:selected",this).val(), 
 													f=$(this).data('fn') || null;
-											//console.log(v,f);
-											if(f!=undefined) eval(f+'("'+v+'")');
-											if(v=="JMYAGREGAR"){
-												jmy_web_select_editar(dv);
-											}
-										});
+												if(f!=undefined) eval(f+'("'+v+'")');
+												if(v=="JMYAGREGAR"){
+													jmy_web_select_editar(dv);
+												}
+											});
+										}
 									break;
 									default:
 										if(o!=undefined){
@@ -305,7 +307,16 @@ function jmy_web_div_click(){
 						}
 					},
 					error: function(res) {
-						swal("UPS!","Ocurrió un error al solicitar datos, intente de nuevo.","warning", {
+						let r = (typeof res == "string" && res instanceof String) ? res : "";
+						switch (r) {
+								case "Unauthorized":
+										r={t:"Sin permisos",m:"Este usuario no tiene acceso",t:"error"};    
+								break;
+								default:
+										r={t:"UPS!",m:"Ocurrió un error al solicitar datos, intente de nuevo.",t:"warning"};    
+								break;
+						}
+						swal(r.t,r.m,r.t, {
 							buttons: false,
 							timer: 3000,
 						});
@@ -340,7 +351,7 @@ function jmy_web_div_click(){
 					});
 				}
 			}
-		}); /*Final de funciones Globales para el tema */ /* Funciones Editor de Blog */
+		}); 
 	});
 }
 
