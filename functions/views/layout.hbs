@@ -10,7 +10,6 @@
 	<title>{{head.title}}</title>
 	<!-- Canonical SEO -->
     <link rel="canonical" href="https://www.comsis.mx/"/>
-    <base href="{{head.cdn}}" target="_blank">
 	{{#carga carga.meta}}
     <meta {{#if name}} name="{{name}}" {{/if}} {{#if content}} content="{{content}}" {{/if}} {{#if property}} property="{{property}}" {{/if}} >{{/carga}}
 	
@@ -64,20 +63,40 @@
             font-weight: normal;
             font-style: normal;
         }
+		.show {
+			display: block !important;
+			opacity: 1 !important;
+			filter: alpha(opacity=1) !important;
+			visibility: visible !important;
+			display: block;
+			top:140%;
+		}
+		.nav-mobile-menu {
+			z-index: 10 !important;
+		}
+		.nav-mobile-menu .dropdown-menu li a {
+			color: #333 !important;
+		}
+		.jmy_li_favoritos{
+			width: 400px;
+		}
     </style>
+	<script type="text/javascript">
+		const url='{{head.url}}',url_base='{{head.url_base}}';
+	</script>
 </head>
 
 <body>
 
 	<div class="wrapper">
 	    <div class="sidebar" data-background-color="brown" data-active-color="danger">
-	    <!--
+	    {{!--
 			Tip 1: you can change the color of the sidebar's background using: data-background-color="white | brown"
 			Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
-		-->
+		--}}
 			<div class="logo">
 				<a href="{{panel.url}}" class="simple-text logo-mini">
-					<img src="{{empresa.logo}}"  width="30"/>
+					<img src="{{empresa.logo}}"  width="60"/>
 					
 				</a>
 
@@ -146,7 +165,7 @@
 							</ul>
 						</div>
 	                </li>					
-						<li>
+					<li>
 						<a data-toggle="collapse" href="#configuracionMenu">
 							<i class="fas fa-gears"></i>
 							<p>Configuración
@@ -183,9 +202,7 @@
 					 <li>
 	                    <p><span class="badge badge-pill badge-danger">Panel TPK</span></p>
 	                </li>
-					
-	                </li>					
-						<li>
+					<li>
 						<a data-toggle="collapse" href="#tpkVentasMenu">
 							<i class="fas fa-funnel-dollar"></i>
 							<p>Ventas
@@ -216,9 +233,7 @@
 	                        </ul>
 						</div>
 					</li>
-	             	
-	                </li>					
-						<li>
+					<li>
 						<a data-toggle="collapse" href="#configuracionMenu">
 							<i class="fas fa-gears"></i>
 							<p>Proyectos
@@ -262,8 +277,7 @@
 	                        <p>Captura</p>
 	                    </a>
 	                </li>
-	                </li>					
-						<li>
+					<li>
 						<a data-toggle="collapse" href="#smpAvancesMenu">
 							<i class="fas fa-eye"></i>
 							<p>Gestión
@@ -303,10 +317,11 @@
 	    </div>
 
 	    <div class="main-panel">
+			
 			<nav class="navbar navbar-default">
 	            <div class="container-fluid">
 					<div class="navbar-minimize">
-						<button id="minimizeSidebar" class="btn btn-fill btn-icon"><i class="fas fa-ellipsis-h"></i></button>
+						<button id="minimizeSidebar" class="btn btn-fill btn-icon"><i class="ti-more-alt"></i></button>
 					</div>
 	                <div class="navbar-header">
 	                    <button type="button" class="navbar-toggle">
@@ -315,29 +330,41 @@
 	                        <span class="icon-bar bar2"></span>
 	                        <span class="icon-bar bar3"></span>
 	                    </button>
-	                    <a class="navbar-brand" href="#Dashboard">
-							{{head.title}}
-						</a>
+	                    <a class="navbar-brand" href="{{head.url_base}}{{head.url}}">
+							{{head.title}}</a>
 	                </div>
 	                <div class="collapse navbar-collapse">
-
 						<form class="navbar-form navbar-left navbar-search-form" role="search">
 	    					<div class="input-group">
 	    						<span class="input-group-addon"><i class="fa fa-search"></i></span>
 	    						<input type="text" value="" class="form-control" placeholder="Buscar...">
 	    					</div>
 	    				</form>
-
 	                    <ul class="nav navbar-nav navbar-right">
 	                        <li>
-	                            <a href="#stats" class="dropdown-toggle btn-magnify" data-toggle="dropdown">
-	                                <i class="far fa-star"></i>
-									<p>1</p>
+	                            <a href="#stats" class="dropdown-toggle btn-magnify favoritos-pop" data-toggle="dropdown">
+	                                <i class="ti-panel"></i>
+									<p>Stats</p>
 	                            </a>
 	                        </li>
 	                        <li class="dropdown">
+	                            <a href="#favoritos" class="dropdown-toggle btn-rotate" data-toggle="dropdown">
+	                                <i class="far fa-star"></i>
+	                                <span class="notification jmy_dashboard_favoritos_count">-</span>
+									<p class="hidden-md hidden-lg">
+										Favoritos
+										<b class="caret"></b>
+									</p>
+	                            </a>
+	                            <ul class="dropdown-menu jmy_li_favoritos">
+	                                <li><a href="#not1" >
+										<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+										<span class="sr-only">Loading...</span></a></li>
+	                            </ul>
+	                        </li>
+	                        <li class="dropdown">
 	                            <a href="#notifications" class="dropdown-toggle btn-rotate" data-toggle="dropdown">
-	                                <i class="far fa-bell"></i>
+	                                <i class="ti-bell"></i>
 	                                <span class="notification">5</span>
 									<p class="hidden-md hidden-lg">
 										Notifications
@@ -345,16 +372,14 @@
 									</p>
 	                            </a>
 	                            <ul class="dropdown-menu">
-	                                <li><a href="#not1">Notification 1</a></li>
-	                                <li><a href="#not2">Notification 2</a></li>
-	                                <li><a href="#not3">Notification 3</a></li>
-	                                <li><a href="#not4">Notification 4</a></li>
-	                                <li><a href="#another">Another notification</a></li>
+	                                <li><a href="#not1" >
+										<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+										<span class="sr-only">Loading...</span></a></li>
 	                            </ul>
 	                        </li>
 							<li>
 	                            <a href="#settings" class="btn-rotate">
-									<i class="fas fa-cogs"></i>
+									<i class="ti-settings"></i>
 									<p class="hidden-md hidden-lg">
 										Settings
 									</p>
@@ -364,8 +389,13 @@
 	                </div>
 	            </div>
 	        </nav>
-    {{{body}}}
-    
+
+	        <div class="content">
+	            <div class="container-fluid">
+					{{{body}}}
+				</div>
+			</div>
+			
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">
@@ -497,6 +527,7 @@
 	{{carga.meta}}
 
 	<script type="text/javascript">
+		
     /*	$(document).ready(function(){
 			demo.initOverviewDashboard();
 			demo.initCirclePercentage();

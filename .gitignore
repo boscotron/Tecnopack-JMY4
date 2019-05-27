@@ -77,3 +77,4 @@ typings/
 # FuseBox cache
 .fusebox/
 functions/config/key.zip
+public/assets/.DS_Store

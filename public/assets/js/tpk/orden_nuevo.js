@@ -1,5 +1,5 @@
 let opS = 0,g = [],l={v:'<i class="fas fa-plus-circle"></i> Ver todo los registros',o:'<i class="fas fa-minus-circle"></i> Ver menos regitros'};
-const url_base=$('#url_base').val();
+
 $(document).ready(function(){
     
     let $validator = $("#wizardForm").validate({

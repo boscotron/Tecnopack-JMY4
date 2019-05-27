@@ -1,7 +1,42 @@
 $(document).ready(function(){
-    
-
-
+     let container = document.getElementById("jsoneditor"),
+        j = document.getElementById("jsoneditor").innerHTML,h="",v={},c=1,cf=6,l={v:'<i class="fas fa-plus-circle"></i> Ver todo los registros',o:'<i class="fas fa-minus-circle"></i> Ver menos regitros'};
+    if(j!=''&& typeof j =="string")
+      j=JSON.parse(j);
+    console.log(j);
+    document.getElementById("jsoneditor").innerHTML='';
+    let editor = new JSONEditor(container, {
+      mode: 'view',
+      modes: ['code', 'form', 'text', 'tree', 'view'], // allowed modes
+      onError: function (err) {
+        alert(err.toString());
+      },
+      onModeChange: function (newMode, oldMode) {
+        console.log('Mode switched from', oldMode, 'to', newMode);
+      }
+    });
+    editor.set(j[0].jmy_ver);
+    h+='<table class="table table-hover"><tbody>';
+    v=j[0].jmy_ver.ot;
+    Object.keys(v).forEach(function (e) {
+        console.log(e);
+        const tm = v[e];
+        if(typeof tm ==="string"){
+            h+='<tr class="'+((c>cf)?'ocultar':'')+'"><td>'+filtro(e)+'</td><td>'+filtro(tm)+'</td></tr>'; c++;}
+        if(typeof tm ==="object")
+            Object.keys(tm).forEach(function (eb) {
+                if(typeof v[e][eb] == "object") v[e][eb]=v[e][eb].join(',');
+                h+='<tr class="'+((c>cf)?'ocultar':'')+'"><td>'+filtro(eb)+'</td><td>'+filtro(v[e][eb],(['foto'].includes(eb))?{type:'imagen_perfil'}:{type:''})+'</td></tr>'; c++;
+            });
+    });
+    h+='</tbody></table><button id="ver_todo" class="btn btn-block">'+l.v+'</button>';
+    $("#solicitud_brief").html(h);
+    $(".ocultar").hide();
+    $("#ver_todo").on('click',function (e) {
+      e.preventDefault();
+      $(".ocultar").toggle(80);
+      $(this).html((($(this).html()==l.v)?l.o:l.v));
+  });
     google.charts.load("current", {packages:["timeline"]});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
@@ -34,10 +69,6 @@ $(document).ready(function(){
       chart.draw(dataTable);
     }
 
-    let container = document.getElementById("jsoneditor"),
-        j = document.getElementById("jsoneditor").innerHTML;
-    if(j!=''&& typeof j =="string")
-      j=JSON.parse(j);
-    console.log(j);
+   
  
 });

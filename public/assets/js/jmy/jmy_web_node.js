@@ -1,3 +1,112 @@
+function favoritos_pop(gd=[]) {
+	const	h_f=function (d=[],h='',c=0) {
+		h+='<li class="jmy_li_favoritos_ac_n" data-sec="f" data-ac="n" > <a class="btn-warning"> <i class="fas fa-plus-circle"></i> Agregar nuevo</a></li>';
+		d.forEach(e => {
+			console.log(e);
+			
+			h+='<li><a class="jmy_li_favoritos_ac" href="'+url_base+e.url+'" >'+e.titulo+' <div class="pull-right"><button class="btn btn-xs btn-fill jmy_li_favoritos_ac_n" data-sec="f" data-i="'+c+'" data-ac="b"><i class="fas fa-times"></i></button><button class="btn btn-xs btn-fill jmy_li_favoritos_ac_n" data-sec="f" data-i="'+c+'" data-ac="a" ><i class="fas fa-archive"></i></button></br><small>'+jmy_hace_tiempo(e.fecha)+'</small></div><br><small>'+e.url+'</small> </a></li>';c++;
+		});
+		return h;
+	},
+	gp= function (d={}) {
+		$.ajax({
+			url: url_base + 'administrador/jmyWebAjG/fg',
+			type: 'post',	
+			contentType:false,
+			dataType: 'json',
+			cache: false,
+			processData: false,
+			success: function(re) {
+				console.log(re);
+				if(typeof re.f.l == "object")
+					$('.jmy_li_favoritos').html(h_f(re.f.l));
+				if($(".jmy_dashboard_favoritos_count").length && typeof re.f.c.activos == "string"){
+					$(".jmy_dashboard_favoritos_count").html(re.f.c.activos);
+					jmy_li_favoritos_ac_n(re);	
+				}
+			},
+			error: function(re) {
+				swal("UPS!","Ocurrió un error al guardar. Intenta de nuevo.","warning", {
+					buttons: false,
+					timer: 3000,
+				});
+				console.error(re);
+			},
+			data: JSON.stringify(d)
+		});
+	},
+	acB =function (r={}) {
+		$('.jmy_li_favoritos_ac_n').on('click',function (e) {
+			e.preventDefault();
+			let s=$(this).data('sec')||null,i=$(this).data('i')||null,ac=$(this).data('ac')||null,
+				m ={
+				f:{
+					titulo:document.title,
+					url:url,
+					fecha:Date.now()
+				}
+			}
+			if(typeof s == "string")
+				switch (ac) {
+					case 'n':
+						r[s].l.unshift(m[s]);		
+					break;
+					case 'a':
+						if(i)
+							r[s].la.unshift(r[s].la[i]);	
+						else
+							break;
+					case 'b':
+						if(i)
+							unset(r[s].la[i])
+					break;
+					default:
+						break;
+				}
+			gp(r);
+		});
+	}
+	jQuery(function ($) { 
+		if ($('ul.jmy_li_favoritos').length) {
+		
+			$.ajax({
+				url: url_base + 'administrador/jmyWebAjG/fl',
+				type: 'post',	
+				contentType:false,
+				dataType: 'json',
+				cache: false,
+				processData: false,
+				success: function(res) {
+					console.log(res);
+					r={
+						f:{
+							c:res.f.c || {},
+							l:res.f.l || [],
+							la:res.f.la || []
+						}
+					};
+					if($(".jmy_dashboard_favoritos_count").length && typeof r.f.c.activos == "string")
+						$(".jmy_dashboard_favoritos_count").html(r.f.c.activos);
+				
+					$('.jmy_li_favoritos').html(h_f(r.f.l));
+					
+				
+					acB(r);					
+
+				},
+				error: function(res) {
+					swal("UPS!","Ocurrió un error al guardar. Intenta de nuevo.","warning", {
+						buttons: false,
+						timer: 3000,
+					});
+					console.error(res);
+				},
+				data: JSON.stringify({})
+			});
+		}
+	});
+}
+
 function jmy_web_guardar(gd=[]) {
 	console.log(gd);
 	jQuery(function ($) { 
@@ -37,7 +146,7 @@ function jmy_web_guardar(gd=[]) {
 		})).then(function (e) {
 			console.log('ggggg',g);			
 			$.ajax({
-				url: $("#url_base").val() + 'administrador/jmyWebAjG/s',
+				url: url_base + 'administrador/jmyWebAjG/s',
 				type: 'post',	
 				contentType:false,
 				dataType: 'json',
@@ -217,7 +326,7 @@ function jmy_web_div_click(){
 			//console.log(m);			
 			if(Object.keys(m.tx).length>0 || m.se.length>0)
 				$.ajax({
-					url: $("#url_base").val() + 'administrador/jmyWebAjG/v',
+					url: url_base+ 'administrador/jmyWebAjG/v',
 					type: 'post',	
 					contentType:false,
 					dataType: 'json',
@@ -906,7 +1015,7 @@ function jmy_web_select_guardar(d=[]){
 	$('.jmy_select_guardar').attr('disabled','disabled');
 	jQuery(function ($) { 
 		$.ajax({
-			url: $("#url_base").val() + 'administrador/jmyWebAjG/l',
+			url: url_base+ 'administrador/jmyWebAjG/l',
 			type: 'post',	
 			contentType:false,
 			dataType: 'json',
@@ -914,20 +1023,27 @@ function jmy_web_select_guardar(d=[]){
 			processData: false,
 			success: function(res) {
 				console.log(d,res);
-				let e = res[0][0].jmy_guardar.error || null;
-				console.log(e);				
-				if(e==undefined){
-					if ($('#'+d.i).find("option[value='" + d.value + "']").length) {
-						$('#'+d.i).val(d.value).trigger('change');
-					}else{ 
-						const newOption = new Option(d.nombre, d.value, true, true);
-						$('#'+d.i).append(newOption).trigger('change');
-					} 
-					$(".webSliderOPSelect ").remove();
+				if(typeof res.error =="undefined"){
+					let e = res[0][0].jmy_guardar.error || null;
+					console.log(e);				
+					if(e==undefined){
+						if ($('#'+d.i).find("option[value='" + d.value + "']").length) {
+							$('#'+d.i).val(d.value).trigger('change');
+						}else{ 
+							const newOption = new Option(d.nombre, d.value, true, true);
+							$('#'+d.i).append(newOption).trigger('change');
+						} 
+						$(".webSliderOPSelect ").remove();
+					}else{
+						console.error(e);					
+						$('.jmy_select_guardar').removeAttr('disabled');
+						swal("UPS!","Ocurrió un error al guardar. Intenta de nuevo.","warning", );
+					}
 				}else{
-					console.error(e);					
+					console.error(res);		
+					$(".webSliderOPSelect ").remove();
 					$('.jmy_select_guardar').removeAttr('disabled');
-					swal("UPS!","Ocurrió un error al guardar. Intenta de nuevo.","warning", );
+					swal("Acceso restringido",res.error,"error" );
 				}
 			},
 			error: function(res) {
@@ -948,7 +1064,7 @@ function jmy_web_select(d=[]){
 	
 	jQuery(function ($) { 
 		$.ajax({
-			url: $("#url_base").val() + 'administrador/jmyWebAjG/v',
+			url: url_base + 'administrador/jmyWebAjG/v',
 			type: 'post',	
 			contentType:false,
 			dataType: 'json',
@@ -986,7 +1102,21 @@ function jmy_web_select(d=[]){
 		});
 	});	
 }
-
+function jmy_hace_tiempo(primeraFecha='',segundaFecha='',leng={y:'Años',m:'Meses',d:'Días',h:'Horas',i:"Minuto(s)",s:'un momento',p:'Hace'}){
+	primeraFecha = new Date(Number(primeraFecha));
+	segundaFecha = (segundaFecha!='')? new Date(Number(segundaFecha)): new Date(Date.now());
+	let o=24*60*60*1000,t='d',d=Math.abs((primeraFecha.getTime()-segundaFecha.getTime())/(o));
+	if(d>728){d= ((d / 30) / 365);t='y'}else{
+		if(d>30){d= d / 30;t='m'}else{
+			if(d>=1){d=d;t='d'}else{
+				if(d<1){d=d*1000;t='h'}
+				if(d<1){d=d*60;t='i'}
+				if(d<0.05){d='';t='s'}
+			}
+		}
+	}
+	return leng.p+' '+((d!='')?Math.round(d):'')+' '+leng[t];
+}
 function carga(d=[]){
 	jQuery(function ($) { 
 		$("#jmy_web").hide(250);
@@ -994,7 +1124,9 @@ function carga(d=[]){
 			console.log('init jmy');
 				$('body').prepend('<div id="jmy_web"></div><div id="jmy_web_tools"></div>');
 			//img_op();
-			jmy_web_div_click();/*
+			jmy_web_div_click();
+			favoritos_pop();
+			/*
 			jmy_web_categorias_click();
 			jmy_web_contador_click();
 			jmy_web_cargaSlider();

@@ -49,14 +49,14 @@ router.get('/ordenes/:c', jmy.sesion(jmy_connect.key),async (req, res) => {
                         {url:"//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"},
                         {url:"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"},
                         {url:"https://unpkg.com/popper.js"},
-                        {url:d.head.cdn+"assets/js/jmy/jmy_web_node.js"},
+                        {url:d.head.cdn+"assets/js/jmy/jmy_web_node.js?v="+Date.now()},
                         {url:d.head.cdn+"assets/js/tpk/utilidades.js?v="+Date.now()},
-                        {url:d.head.cdn+"assets/js/tpk/orden_nuevo.js"}
+                        {url:d.head.cdn+"assets/js/tpk/orden_nuevo.js?v="+Date.now()}
                     ]
                 };
                 d.head.title="Nuevo brief";
                 d.out['prefijo']="tpk_orden_nuevo"; 
-                res.render('tpk_orden_nuevo',d);
+                res.render('tpk/tpk_orden_nuevo',d);
                     
             break;    
             case 'lista':
@@ -69,14 +69,14 @@ router.get('/ordenes/:c', jmy.sesion(jmy_connect.key),async (req, res) => {
                         {url:"//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"},
                         {url:"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"},
                         {url:"https://unpkg.com/popper.js"},
-                        {url:d.head.cdn+"assets/js/jmy/jmy_web_node.js"},
+                        {url:d.head.cdn+"assets/js/jmy/jmy_web_node.js?v="+Date.now()},
                         {url:d.head.cdn+"assets/js/tpk/utilidades.js?v="+Date.now()},
                         {url:d.head.cdn+"assets/js/tpk/orden_lista.js?v="+Date.now()}
                     ]
                 };
                 d.head.title="Listado de ordenes";
                 d.out['prefijo']="tpk_ordenes_lista"; 
-                res.render('tpk_ordenes_lista',d);
+                res.render('tpk/tpk_ordenes_lista',d);
             break;    
             default:
               res.render('404',d);
@@ -156,10 +156,10 @@ router.get('/orden/:i', jmy.sesion(jmy_connect.key),async (req, res) => {
         let d=jmy.context(req);
         const a=req.accesos,id=req.params.i|| null; 
 
-
+        
         d.head.title="Sin referencia";
         if(id==undefined){
-            res.render('tpk_orden_404',d);
+            res.render('tpk/tpk_orden_404',d);
         }else{
             jmy.ver([{
                 tabla:'ordenes',
@@ -171,35 +171,46 @@ router.get('/orden/:i', jmy.sesion(jmy_connect.key),async (req, res) => {
                     {
                         nom:"Fecha",
                         var:"2018-01-01",
-                    },
-                    {
+                    },{
                         nom:"Cliente",
                         var:"2018-01-01",
-                    },
-                    {
+                    },{
                         nom:"Marca",
                         var:"2018-01-01",
-                    },
-                    {
+                    },{
                         nom:"Cantidad a cotizar",
                         var:"2018-01-01",
-                    },
-                    {
+                    },{
                         nom:"Corrugado",
                         var:"2018-01-01",
-                    },
-                    {
+                    },{
                         nom:"Charola",
                         var:"2018-01-01",
                     }
                 ];
                 d.head.title="Sin referencia";
-                d.carga.css.push({url:d.head.cdn+"assets/jsoneditor/dist/jsoneditor.min.css"});
+                d.carga={
+                    css:[
+                        {url:d.head.cdn+"assets/jsoneditor/dist/jsoneditor.min.css"}
+                    ],
+                    js:[
+                        {url:"//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"},
+                        {url:"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"},
+                        {url:"https://unpkg.com/popper.js"},
+                        {url:d.head.cdn+"assets/jsoneditor/dist/jsoneditor.min.js"},
+                        {url:"https://www.gstatic.com/charts/loader.js"},
+                        {url:d.head.cdn+"assets/js/jmy/jmy_web_node.js?v="+Date.now()},
+                        {url:d.head.cdn+"assets/js/tpk/utilidades.js?v="+Date.now()},
+                        {url:d.head.cdn+"assets/js/tpk/orden.js?v="+Date.now()}
+                    ]
+                };
+                d.carga.css.push();
                 d.carga.js.push({url:d.head.cdn+"assets/jsoneditor/dist/jsoneditor.min.js"})
-                d.carga.js.push({url:"https://www.gstatic.com/charts/loader.js"});
+                d.carga.js.push({url:"https://www.gstatic.com/charts/loader.js"})
+                d.carga.js.push({url:d.head.cdn+"assets/js/tpk/utilidades.js?v="+Date.now()});
                 d.carga.js.push({url:d.head.cdn+"assets/js/tpk/orden.js?d="+Date.now() });;
 
-                res.render('tpk_orden_detalles',d);
+                res.render('tpk/tpk_orden_detalles',d);
             });
         }
 

@@ -26,7 +26,6 @@ $(document).ready( function () {
         align: 'center'
     }
 });*/
-    const url_base=$('#url_base').val();
     function modulos_sav() {
         let g ={};
         $(".modulos_def").each(function(){
@@ -151,7 +150,8 @@ $(document).ready( function () {
         },error: function(result) {console.log(result); console.log(url_base+"/administrador/usuarios/modulos");}
         });        
     }
-    $(".actualizar_usuarios").on('click',function(){
+    $(".actualizar_usuarios").on('click',function(e){
+        e.preventDefault();
         console.log('Obetenido lista de usuarios');         
         actualizar_usuarios();
     });

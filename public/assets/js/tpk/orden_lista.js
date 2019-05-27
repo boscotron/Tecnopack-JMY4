@@ -79,7 +79,7 @@ $(document).ready(function name() {
                             h+='<tr class="'+((c>3)?'ocultar':'')+'"><td>'+filtro(e)+'</td><td>'+filtro(tm)+'</td></tr>';
                         if(typeof tm ==="object")
                             Object.keys(tm).forEach(function (eb) {
-
+                                if(typeof data[row.id][e][eb]=="object")data[row.id][e][eb]=data[row.id][e][eb].join(',');
                                 h+='<tr class="'+((c>3)?'ocultar':'')+'"><td>'+filtro(eb)+'</td><td>'+filtro(data[row.id][e][eb],(['foto'].includes(eb))?{type:'imagen_perfil'}:{type:''})+'</td></tr>';
                             });
                     });
